@@ -18,4 +18,4 @@ sync_missing_versions:
 	curl -s https://hub.docker.com/v2/repositories/$(DOCKER_IMAGE_NAME)/tags/ | jq -r '.results[] | select(.name != "master" and .name != "latest") | .name' > $$TMP/promool.tags ;\
 	grep -v -x -f $$TMP/promool.tags $$TMP/prometheus.tags > $$TMP/missing.tags ;\
 	grep -v -x -f blacklist.tags $$TMP/missing.tags > $$TMP/filtered_missing.tags ;\
-	cat $$TMP/filtered_missing.tags | xargs -I{} -n1 bash -c "make sync PROMTOOL_VERSION={}" ;\
+	cat $$TMP/filtered_missing.tags | sort | xargs -I{} -n1 bash -c "make sync PROMTOOL_VERSION={}" ;\
