@@ -1,13 +1,21 @@
 DOCKER_IMAGE_NAME=mbenabda/promtool
 PROMTOOL_VERSION=
+BASE_IMAGE=
 
 .PHONY: build publish sync sync_missing_versions
 
 build: 
-	docker build --build-arg=PROMTOOL_VERSION=$(PROMTOOL_VERSION) . -t $(DOCKER_IMAGE_NAME):$(PROMTOOL_VERSION)
-	
+	docker build --build-arg=PROMTOOL_VERSION=$(PROMTOOL_VERSION) \
+				 --build-arg=BASE_IMAGE=scratch \
+				 . -t $(DOCKER_IMAGE_NAME):$(PROMTOOL_VERSION)
+
+	docker build --build-arg=PROMTOOL_VERSION=$(PROMTOOL_VERSION) \
+				 --build-arg=BASE_IMAGE=alpine:3.8 \
+				 . -t $(DOCKER_IMAGE_NAME):$(PROMTOOL_VERSION)-alpine
+
 publish: 
 	docker push $(DOCKER_IMAGE_NAME):$(PROMTOOL_VERSION)
+	docker push $(DOCKER_IMAGE_NAME):$(PROMTOOL_VERSION)-alpine
 
 sync: build publish
 
