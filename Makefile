@@ -47,7 +47,8 @@ sync_missing_versions:
 		NEXT_PAGE=$$(cat $$TMP/page.json | jq -rM '.next'); \
 	done; \
 	\
-	grep -v -x -f "$$TMP/promtool.tags" "$$TMP/prometheus.tags" > "$$TMP/missing.tags"; \
-	grep -v -x -f blacklist.tags "$$TMP/missing.tags" > "$$TMP/filtered_missing.tags"; \
+	(grep -v -x -f "$$TMP/promtool.tags" "$$TMP/prometheus.tags" > "$$TMP/missing.tags") || true; \
+	(grep -v -x -f blacklist.tags "$$TMP/missing.tags" > "$$TMP/filtered_missing.tags") || true; \
+	touch "$$TMP/filtered_missing.tags"; \
 	cat "$$TMP/filtered_missing.tags" | sort | xargs -I{} -n1 bash -c "make sync PROMTOOL_VERSION={}"; \
-	
+

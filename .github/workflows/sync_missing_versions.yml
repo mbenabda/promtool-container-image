@@ -1,0 +1,19 @@
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: '0 0 1 * *' # at 00:00 on 1st day of month
+jobs:
+  sync_missing_versions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+    
+      - name: Sync missing versions
+        run: make sync_missing_versions
+
