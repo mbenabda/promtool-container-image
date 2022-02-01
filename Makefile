@@ -1,4 +1,4 @@
-DOCKER_IMAGE_NAME=mbenabda/promtool
+DOCKER_IMAGE_NAME?=mbenabda/promtool
 PROMTOOL_VERSION=
 BASE_IMAGE=
 

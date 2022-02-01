@@ -12,20 +12,20 @@ Makefile
 ===
 - Build promtool container images from a given version
 ```
-make build PROMTOOL_VERSION=v1.7.1
+make build PROMTOOL_VERSION=v1.7.1 DOCKER_IMAGE_NAME=me/promtool
 ```
 
 - Publish built promtool container images
 ```
-make publish PROMTOOL_VERSION=v1.7.1
+make publish PROMTOOL_VERSION=v1.7.1 DOCKER_IMAGE_NAME=me/promtool
 ```
 
 - Build & publish promtool container images
 ```
-make sync PROMTOOL_VERSION=v1.7.1
+make sync PROMTOOL_VERSION=v1.7.1 DOCKER_IMAGE_NAME=me/promtool
 ```
 
 - sync promtool cointainer images missing from the promtool repos
 ```
-make sync_missing_versions
+make sync_missing_versions DOCKER_IMAGE_NAME=me/promtool
 ```
