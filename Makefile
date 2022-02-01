@@ -1,3 +1,4 @@
+TARGET_DOCKER_REGISTRY_URL?=https://hub.docker.com/v2/repositories/
 DOCKER_IMAGE_NAME?=mbenabda/promtool
 PROMTOOL_VERSION=
 BASE_IMAGE=
@@ -36,7 +37,7 @@ sync_missing_versions:
 		NEXT_PAGE=$$(cat $$TMP/page.json | jq -rM '.next'); \
 	done; \
 	\
-	curl -s https://hub.docker.com/v2/repositories/$(DOCKER_IMAGE_NAME)/tags/ > $$TMP/page.json; \
+	curl -s $(TARGET_DOCKER_REGISTRY_URL)$(DOCKER_IMAGE_NAME)/tags/ > $$TMP/page.json; \
 	cat $$TMP/page.json | jq -r '.results[] | .name' >> "$$TMP/promtool.tags"; \
 	NEXT_PAGE=$$(cat $$TMP/page.json | jq -rM '.next'); \
 	while [ "$$NEXT_PAGE" != "null" ]; \
